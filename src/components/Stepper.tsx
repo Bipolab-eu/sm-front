@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from "react"
-import StepCollege from "./StepCollege"
-import StepQuizOne from "./StepQuizOne"
+import StepOne from "./StepOne"
+import StepTwo from "./StepTwo"
+import StepThree from "./StepThree"
 
 interface Props {
   collegesData: Array<Object>
@@ -11,38 +12,24 @@ interface Props {
 
 
 export default function Stepper({ collegesData, quizData }:Props) {
-  const [activeTab, setActiveTab] = useState(0)
+  const [step, setStep] = useState(0)
+  const [formValues, setFormValues] = useState(Array)
 
   const steps = [
-    <div key={'college'}>
-      <StepCollege data={collegesData} />
+    <div key={1}>
+      <StepOne data={collegesData} setStep={setStep} setFormValues={setFormValues} formValues={formValues} />
     </div>,
-    <div key={'quiz'}>
-      <StepQuizOne data={quizData} />
+    <div key={2}>
+      <StepTwo data={quizData} setStep={setStep} setFormValues={setFormValues} formValues={formValues} />
+    </div>,
+    <div key={3}>
+      <StepThree />
     </div>
   ]
 
-  return (
-    <div>
-      <div>
-        {
-          steps[activeTab]
-        }
-      </div>
-      <button
-        onClick={() => setActiveTab(prev => prev -1 )}
-        disabled={activeTab === 0}
-        style={{ display: activeTab === 0 ? 'none' : 'inline' }}
-      >
-        Atrás
-      </button>
-      <button
-        onClick={() => setActiveTab(prev => prev +1 )}
-        disabled={activeTab === steps.length - 1}
-      >
-        Siguiente
-      </button>
+  console.log(formValues) // borrar en producción
 
-    </div>
+  return (
+    steps[step]
   )
 }

@@ -1,9 +1,22 @@
 'use client'
+// Este componente envía el Nombre y la Id 
+// del centro educativo
 
-export default function StepCollege({ data }:any) {
+interface Props {
+  data: Array<Object>,
+  setStep: Function,
+  setFormValues: Function
+  formValues: any
+}
 
+export default function StepOne({ data, setStep, setFormValues, formValues }:Props) {
+  
   function handleSubmit(formData: FormData) {
     const { college }:any = Object.fromEntries(formData.entries())
+
+    setStep((prev:any) => prev +1)
+
+    setFormValues([...formValues, college])
   }
 
   return (
@@ -16,7 +29,7 @@ export default function StepCollege({ data }:any) {
           )
         }
       </select>
-      {/* <button type="submit">Siguiente</button> */}
+      <button type="submit">Siguiente</button>
     </form>
   )
 }

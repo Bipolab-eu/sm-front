@@ -14,7 +14,7 @@ export async function getColleges () {
 
     const { data } = await response.json()
 
-    return data.map(({ id, attributes: { name } }: any) => ({ id, name }));
+    return data.map(({ id, attributes: { name, latitude, longitude } }: any) => ({ id, name, latitude, longitude }))
   
   } catch (error) {
     console.error('Error', error)
@@ -22,15 +22,19 @@ export async function getColleges () {
   }
 }
 
-export async function getQuizzes () {
+export async function getQuiz (paramId:Number) {
   try {
-    const response = await fetch(`${url}/quizzes`, {
+    const response = await fetch(`${url}/quizzes/${paramId}?populate=*`, {
       cache: 'no-store'
     })
 
-    const { data } = await response.json()
+    const { data: {
+      attributes: {
+        question
+      }
+    } } = await response.json()
 
-    return data.map(({ id, attributes: { question, answer_a, answer_b, answer_c } }:any) => ({ id,question, answer_a, answer_b, answer_c }));
+    return question.map(({ id, title, answer_a, answer_b, answer_c }: any) => ({ id, title, answer_a, answer_b, answer_c }));
 
   } catch (error) {
     console.error('Error', error)
