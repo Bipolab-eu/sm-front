@@ -4,27 +4,17 @@
 
 import Input from "./Input"
 
-interface Props {
-  data: Array<Object>
-  setStep: Function,
-  setFormValues: Function
-  formValues: any
-}
+export default function StepTwo ({ data, onSubmit }){
 
-export default function StepTwo ({ data, setStep, setFormValues, formValues }:Props){
-
-  function handleSubmit(formData: FormData) {
+  function handleSubmit(formData) {
     const formJson = Object.fromEntries(formData.entries())
-
-    setStep((prev:any) => prev +1)
-
-    setFormValues([...formValues, formJson])
+    onSubmit(formJson)
   }
 
   return (
     <form action={handleSubmit}>
       {
-        data.map((e:any) =>
+        data.map((e) =>
           <fieldset key={e.id}>
             <p>{e.title}</p>
             <Input label={'Nunca'} type={'radio'} name={e.id} value={e.answer_a} />
