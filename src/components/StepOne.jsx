@@ -2,11 +2,12 @@
 // Este componente envía el Nombre y la Id 
 // del centro educativo
 
-export default function StepOne({ data, onSubmit }) {
+export default function StepOne({ collegesData, courseData, onSubmit }) {
   
   function handleSubmit(formData) {
-    const { college } = Object.fromEntries(formData.entries())
-    onSubmit(college)
+    const student = Object.fromEntries(formData.entries())
+    
+    onSubmit(student, 'hola')
   }
 
   return (
@@ -14,11 +15,21 @@ export default function StepOne({ data, onSubmit }) {
       <select name="college" defaultValue='default'>
         <option value='default' disabled>Elige tu centro</option>
         {
-          data.map((e) =>
-            <option key={e.id} value={[e.id, e.name]}>{e.name}</option>
+          collegesData.map((e) =>
+            <option key={e.id} value={e.id}>{e.name}</option>
           )
         }
       </select>
+      
+      <select name="course" defaultValue='default'>
+        <option value='default' disabled>Elige tu curso</option>
+        {
+          courseData.map((e) =>
+            <option key={e.id} value={e.id}>{e.title}</option>
+          )
+        }
+      </select>
+
       <button type="submit">Siguiente</button>
     </form>
   )

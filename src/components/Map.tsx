@@ -23,6 +23,7 @@ export default function Map({ props }: any) {
       {props.map((e: any) => (
         <College
           key={e.id}
+          collegeId={e.id}
           name={e.name}
           latitude={e.latitude}
           longitude={e.longitude}

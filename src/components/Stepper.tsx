@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import StepOne from "./StepOne"
 import StepTwo from "./StepTwo"
 import StepThree from "./StepThree"
@@ -9,12 +9,13 @@ import { postStudent } from "@/lib/api"
 
 interface Props {
   collegesData: Array<Object>
+  coursesData: Array<Object>
   fisrtQuizData: Array<Object>
   secondQuizData: Array<Object>
 }
 
 
-export default function Stepper({ collegesData, fisrtQuizData, secondQuizData }:Props) {
+export default function Stepper({ collegesData, coursesData, fisrtQuizData, secondQuizData }:Props) {
   const [step, setStep] = useState(0)
   const [formValues, setFormValues] = useState(Array)
 
@@ -23,13 +24,18 @@ export default function Stepper({ collegesData, fisrtQuizData, secondQuizData }:
     setStep((prev:any) => prev +1)
   };
 
-  if (formValues.length === 3) {
-    postStudent(formValues)
-  }
+  useEffect(() => {
+    if (step === 3) {
+      postStudent(formValues)
+    }
+    
+  }, [step, formValues])
+
+  console.log(formValues) // borrar en producción
   
   const steps = [
     <div key={1}>
-      <StepOne data={collegesData} onSubmit={getFormData} />
+      <StepOne collegesData={collegesData} courseData={coursesData} onSubmit={getFormData} />
     </div>,
     <div key={2}>
       <StepTwo data={fisrtQuizData} onSubmit={getFormData}/>
@@ -38,7 +44,7 @@ export default function Stepper({ collegesData, fisrtQuizData, secondQuizData }:
       <StepThree data={secondQuizData} onSubmit={getFormData}  />
     </div>,
     <div key={4}>
-      <StepFour formValues={formValues} />
+      <StepFour />
     </div>
   ]
 

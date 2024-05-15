@@ -23,7 +23,7 @@ export default function StepThree({ data, onSubmit  }) {
       <button
         type="submit"
       >
-        Siguiente
+        Finalizar
       </button>
     </form>
   )

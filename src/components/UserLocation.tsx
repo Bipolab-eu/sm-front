@@ -25,7 +25,7 @@ export default function UserLocation () {
       position={userPosition}
     >
       <Popup>
-        Hey ! I live here: { [center.lat, center.lng] }
+        Muévete por el mapa y encuentra el centro educativo que prefieras.
       </Popup>
     </Marker>
   );

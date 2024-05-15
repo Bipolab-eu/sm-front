@@ -1,10 +1,13 @@
-import { getColleges } from "@/lib/api"
-import Map from "@/components/Map"
+import Link from "next/link";
 
 export default async function Home() {
-  const colleges = await getColleges()
 
   return (
-    <Map props={colleges} />
+    <main>
+      <h1>Home Page</h1>
+      <Link href={'/map'}>Ver Mapa</Link>
+      <br />
+      <Link href={'/dashboard'}>Hacer Test</Link>
+    </main>
   )
 }

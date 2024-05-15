@@ -22,6 +22,40 @@ export async function getColleges () {
   }
 }
 
+export async function findCollege (paramId: Number) {
+  try {
+    const response = await fetch(`${url}/colleges/${paramId}?populate[students][populate][0]=course`, {
+      cache: 'no-store'
+    })
+
+    const { data: { attributes: { name, students} } } = await response.json()
+
+    return { name, students }
+
+  } catch (error) {
+    console.error('Error', error)
+    throw error
+  }
+
+}
+
+export async function getCourses () {
+  try {
+    const response = await fetch(`${url}/courses`, {
+      cache: 'no-store'
+    })
+
+    const { data } = await response.json()
+
+    return data.map(({ id, attributes: { title } }: any) => ({ id, title }))
+
+
+  } catch (error) {
+    console.error('Error', error)
+    throw error
+  }
+}
+
 export async function getQuiz (paramId:Number) {
   try {
     const response = await fetch(`${url}/quizzes/${paramId}?populate=*`, {
@@ -43,6 +77,8 @@ export async function getQuiz (paramId:Number) {
 }
 
 export async function postStudent (params:any) {
+  const { college, course } = params[0]
+
   await fetch(`${url}/students`, {
       method: 'POST',
       headers: {
@@ -51,8 +87,10 @@ export async function postStudent (params:any) {
       body: JSON.stringify({
         data: {
           college: {
-            id: params[0],
-            name: params[1]
+            id: college,
+          },
+          course: {
+            id: course
           }
         }
       })
