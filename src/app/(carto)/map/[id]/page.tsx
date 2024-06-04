@@ -7,7 +7,6 @@ export default async function CollegeId ({ params: { id }}:any) {
 
   const participantes = students.data.length
 
-  console.log(course)
   return (
     <div>
       <p>{name}</p>

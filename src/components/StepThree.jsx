@@ -6,7 +6,11 @@ export default function StepThree({ data, onSubmit  }) {
   
   async function handleSubmit(formData) {
     const formJson = Object.fromEntries(formData.entries())
-    onSubmit(formJson)
+
+    // Extrae los valores del objeto y crea un array de números
+    const values = Object.values(formJson).map(value => Number(value))
+
+    onSubmit(values)
   }
   
   return (
@@ -15,8 +19,11 @@ export default function StepThree({ data, onSubmit  }) {
         data.map((e) =>
           <fieldset key={e.id}>
             <p>{e.title}</p>
-            <Input label={'Si'} type={'radio'} name={e.id} value={e.answer_a} />
-            <Input label={'No'} type={'radio'} name={e.id} value={e.answer_b} />
+            {
+              e.answer.map(el =>
+                <Input key={el.id} label={el.answer} type={'radio'} name={e.id} value={el.value} />
+              )
+            }
           </fieldset>
         )
       }

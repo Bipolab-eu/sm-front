@@ -39,26 +39,9 @@ export async function findCollege (paramId: Number) {
 
 }
 
-export async function getCourses () {
-  try {
-    const response = await fetch(`${url}/courses`, {
-      cache: 'no-store'
-    })
-
-    const { data } = await response.json()
-
-    return data.map(({ id, attributes: { title } }: any) => ({ id, title }))
-
-
-  } catch (error) {
-    console.error('Error', error)
-    throw error
-  }
-}
-
 export async function getQuiz (paramId:Number) {
   try {
-    const response = await fetch(`${url}/quizzes/${paramId}?populate=*`, {
+    const response = await fetch(`${url}/quizzes/${paramId}?populate[question][populate][0]=answer`, {
       cache: 'no-store'
     })
 
@@ -68,7 +51,7 @@ export async function getQuiz (paramId:Number) {
       }
     } } = await response.json()
 
-    return question.map(({ id, title, answer_a, answer_b, answer_c }: any) => ({ id, title, answer_a, answer_b, answer_c }));
+    return question.map(({ id, title, answer }: any) => ({ id, title, answer }));
 
   } catch (error) {
     console.error('Error', error)
@@ -77,7 +60,13 @@ export async function getQuiz (paramId:Number) {
 }
 
 export async function postStudent (params:any) {
-  const { college, course } = params[0]
+  const { college, course, gender } = params[0]
+  const [ a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p ] = params[1]
+  const depresion = a + b + c + d
+  const suicidio = e + f + g
+  const ansiedad = h + i + j
+  const agresividad = k + l + m
+  const drogas = n + o + p
 
   await fetch(`${url}/students`, {
       method: 'POST',
@@ -89,9 +78,13 @@ export async function postStudent (params:any) {
           college: {
             id: college,
           },
-          course: {
-            id: course
-          }
+          course,
+          gender,
+          depresion,
+          suicidio,
+          ansiedad,
+          agresividad,
+          drogas
         }
       })
     })

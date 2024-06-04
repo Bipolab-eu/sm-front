@@ -9,17 +9,16 @@ import { postStudent } from "@/lib/api"
 
 interface Props {
   collegesData: Array<Object>
-  coursesData: Array<Object>
   fisrtQuizData: Array<Object>
   secondQuizData: Array<Object>
 }
 
 
-export default function Stepper({ collegesData, coursesData, fisrtQuizData, secondQuizData }:Props) {
+export default function Stepper({ collegesData, fisrtQuizData, secondQuizData }:Props) {
   const [step, setStep] = useState(0)
   const [formValues, setFormValues] = useState(Array)
 
-  const getFormData = (params:any) => {
+  const getFormData = (params:Object) => {
     setFormValues([...formValues, params]);
     setStep((prev:any) => prev +1)
   };
@@ -31,11 +30,11 @@ export default function Stepper({ collegesData, coursesData, fisrtQuizData, seco
     
   }, [step, formValues])
 
-  console.log(formValues) // borrar en producción
+  console.log('Datos recopilados:', formValues)
   
   const steps = [
     <div key={1}>
-      <StepOne collegesData={collegesData} courseData={coursesData} onSubmit={getFormData} />
+      <StepOne collegesData={collegesData} onSubmit={getFormData} />
     </div>,
     <div key={2}>
       <StepTwo data={fisrtQuizData} onSubmit={getFormData}/>
