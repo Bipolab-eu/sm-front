@@ -2,10 +2,6 @@
 
 const url = process.env.API_URL
 
-const headers = {
-  'Content-Type': 'application/json',
-};
-
 export async function getColleges () {
   try {
     const response = await fetch(`${url}/colleges`, {
