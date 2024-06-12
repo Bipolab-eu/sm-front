@@ -4,8 +4,8 @@ import Stepper from "../../../components/Stepper";
 
 export default async function Dashboard() {
   const colleges = await getColleges()
-  const firstQuiz = await getQuiz(2)
-  const secondQuiz = await getQuiz(3)
+  const firstQuiz = await getQuiz(1)
+  const secondQuiz = await getQuiz(2)
 
   return (
     <Stepper collegesData={colleges} fisrtQuizData={firstQuiz} secondQuizData={secondQuiz} />
