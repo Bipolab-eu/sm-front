@@ -4,7 +4,7 @@ const url = process.env.API_URL
 
 export async function getColleges () {
   try {
-    const response = await fetch(`${url}/colleges`, {
+    const response = await fetch(`${url}/colleges?sort=name:asc`, {
       cache: 'no-store'
     })
 
