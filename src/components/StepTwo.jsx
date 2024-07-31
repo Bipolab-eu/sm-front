@@ -1,32 +1,43 @@
 'use client'
-// Este componente envía los valores de las respuestas 
-// de la primera parte del formulario.
 
-import Input from "./Input"
+import { useForm } from "react-hook-form"
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
 
-export default function StepTwo ({ data, onSubmit }){
+export default function StepTwo ({ data, onSubmit }) {
+  
+  // Crea el esquema dinámicamente en base a los IDs de las preguntas
+  const StudentSchema = Yup.object().shape(
+    data.reduce((acc, curr) => {
+      acc[curr.id] = Yup.number().required('Elige una respuesta');
+      return acc;
+    }, {})
+  );
 
-  function handleSubmit(formData) {
-    const formJson = Object.fromEntries(formData.entries())
-
-    // Extrae los valores del objeto y crea un array de números
-    const values = Object.values(formJson).map(value => Number(value))
-
-    onSubmit(values)
-  }
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(StudentSchema)
+  })
 
 
   return (
-    <form action={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       {
         data.map((e) =>
           <fieldset key={e.id}>
             <p>{e.title}</p>
             {
               e.answer.map(el =>
-                <Input key={el.id} label={el.answer} type={'radio'} name={e.id} value={el.value} />
+                <label key={el.id}>
+                  <input 
+                    type="radio" 
+                    {...register(`${e.id}`)}
+                    value={el.value}
+                  />
+                  { el.answer}
+                </label>
               )
             }
+            <span>{errors[e.id]?.message}</span>
           </fieldset>
         )
       }

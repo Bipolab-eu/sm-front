@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import StepOne from "./StepOne"
 import StepTwo from "./StepTwo"
-import StepThree from "./StepThree"
 import StepFour from "./StepFour"
 import { postStudent } from "@/lib/api"
 
@@ -34,13 +33,13 @@ export default function Stepper({ collegesData, fisrtQuizData, secondQuizData }:
   
   const steps = [
     <div key={1}>
-      <StepOne collegesData={collegesData} submitData={getFormData} />
+      <StepOne collegesData={collegesData} onSubmit={getFormData} />
     </div>,
     <div key={2}>
       <StepTwo data={fisrtQuizData} onSubmit={getFormData}/>
     </div>,
     <div key={3}>
-      <StepThree data={secondQuizData} onSubmit={getFormData}  />
+      <StepTwo data={secondQuizData} onSubmit={getFormData}  />
     </div>,
     <div key={4}>
       <StepFour />

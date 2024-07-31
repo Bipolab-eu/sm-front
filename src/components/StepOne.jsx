@@ -2,10 +2,11 @@
 // Este componente envía el Nombre y la Id 
 // del centro educativo, así como toda la información del estudiante
 
-import { Formik, Form, Field, ErrorMessage } from "formik"
-import * as Yup from 'yup';
+import { useForm } from "react-hook-form"
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as Yup from 'yup'
 
-export default function StepOne({ collegesData, submitData }) {
+export default function StepOne({ collegesData, onSubmit }) {
 
   const StudentSchema = Yup.object().shape({
 
@@ -23,65 +24,48 @@ export default function StepOne({ collegesData, submitData }) {
   
   });
 
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(StudentSchema)
+  })
+
   return (
-    <Formik
-      initialValues={{
-        college: 'default',
-        course: 'default',
-        gender: 'default'
-      }}
-
-      validationSchema={StudentSchema}
-
-      onSubmit={ values => { submitData(values) }}
-    >
-      <Form>
-        {/* Seleciona el nombre del centro escolar */}
-        <Field
-          component='select'
-          id='college'
-          name='college'
-        >
-          <option value='default' disabled>Elige tu centro</option>
-          {
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {/* Selecciona el Instituto */}
+      <select
+        {...register('college')}
+        defaultValue='default' 
+      >
+        <option value='default' disabled>Elige tu centro</option>
+        {
           collegesData.map((e) =>
-            <option key={e.id} value={e.id}>{e.name}</option>
+            <option key={e.id} value={[e.id]}>{e.name}</option>
           )
         }
-        </Field>
-        <ErrorMessage name='college' component="span" className="pl-4 pt-2 text-sm text-red-500"/>
+      </select>
+      <span>{errors.college?.message}</span>
 
-        {/* Seleciona el curso escolar */}
-        <Field
-          component='select'
-          id='course'
-          name='course'
-        >
-          <option value='default' disabled>Elige tu curso</option>
-          <option value='ESO 1º'>1º ESO</option>
-          <option value='ESO 2º'>2º ESO</option>
-          <option value='ESO 3º'>3º ESO</option>
-          <option value='ESO 4º'>4º ESO</option>
-        </Field>
-        <ErrorMessage name="course" component="span" className="pl-4 pt-2 text-sm text-red-500"/>
+      {/* Selecciona el Curso */}
+      <select {...register('course')} defaultValue='default'>
+        <option value='default' disabled>Elige tu curso</option>
+        <option value='ESO 1º'>1º ESO</option>
+        <option value='ESO 2º'>2º ESO</option>
+        <option value='ESO 3º'>3º ESO</option>
+        <option value='ESO 4º'>4º ESO</option>
+      </select>
+      <span>{errors.course?.message}</span>
 
-        {/* Seleciona el género */}
-        <Field
-          component='select'
-          id='gender'
-          name='gender'
-        >
-          <option value='default' disabled>Elige tu género</option>
-          <option value='Masculino'>Masculino</option>
-          <option value='Femenino'>Femenino</option>
-          <option value='Otro'>Otro</option>
-        </Field>
-        <ErrorMessage name="gender" component="span" className="pl-4 pt-2 text-sm text-red-500" />
 
-      {/* Submit */}
+      {/* Selecciona el Género */}
+      <select {...register('gender')} defaultValue='default'>
+        <option value='default' disabled>Elige tu género</option>
+        <option value='Masculino'>Masculino</option>
+        <option value='Femenino'>Femenino</option>
+        <option value='Otro'>Otro</option>
+      </select>
+      <span>{errors.gender?.message}</span>
+
+      {/* Botón Submit */}
       <button type="submit">Siguiente</button>
-
-      </Form>
-    </Formik>
+    </form>
   )
 }
