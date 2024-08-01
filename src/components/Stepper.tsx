@@ -40,7 +40,7 @@ export default function Stepper({ collegesData, fisrtQuizData, secondQuizData }:
       <StepTwo data={secondQuizData} onSubmit={getFormData}  />
     </div>,
     <div key={4}>
-      <StepFour />
+      <StepFour surveyData={formValues[0]} />
     </div>
   ]
 

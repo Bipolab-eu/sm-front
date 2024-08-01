@@ -7,6 +7,8 @@ export default async function CollegeId ({ params: { id }}:any) {
 
   const participantes = students.data.length
 
+  console.log(students)
+
   return (
     <div>
       <p>{name}</p>
@@ -14,6 +16,7 @@ export default async function CollegeId ({ params: { id }}:any) {
       {
         course.map((e:any) => JSON.stringify(e.course))
       }
+      <p>{JSON.stringify(students)}</p>
     </div>
   )
 }
