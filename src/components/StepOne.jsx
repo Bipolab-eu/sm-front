@@ -21,10 +21,17 @@ export default function StepOne({ collegesData, onSubmit }) {
     gender: Yup.string()
       .oneOf(['Masculino', 'Femenino', 'Otro'], '*Elige tu género') 
       .required('Required'),
+
+    age: Yup.number()
+      .positive('No se admiten números negativos')
+      .integer('No se admiten números decimales')
+      .min(9, 'Para poder realizar la encuesta, debes de tener más de 9 años')
+      .max(18, 'Para poder realizar la encuesta, debes de tener menos de 18 años')
+      .required('Introduce tu edad')
   
   });
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm({
     resolver: yupResolver(StudentSchema)
   })
 
@@ -63,6 +70,19 @@ export default function StepOne({ collegesData, onSubmit }) {
         <option value='Otro'>Otro</option>
       </select>
       <span>{errors.gender?.message}</span>
+
+      <fieldset> 
+        <label htmlFor="age">
+          <input
+            id="age"
+            {...register('age')}
+            type="number"
+            placeholder="Introduce tu edad"
+          />
+          Edad
+        </label>
+        <span>{errors.age?.message}</span>
+      </fieldset>
 
       {/* Botón Submit */}
       <button type="submit">Siguiente</button>

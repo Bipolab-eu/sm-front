@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 
 export default function StepTwo ({ data, onSubmit }) {
-  
+
   // Crea el esquema dinámicamente en base a los IDs de las preguntas
   const StudentSchema = Yup.object().shape(
     data.reduce((acc, curr) => {
@@ -24,7 +24,7 @@ export default function StepTwo ({ data, onSubmit }) {
       {
         data.map((e) =>
           <fieldset key={e.id}>
-            <p>{e.title}</p>
+            <p>{e.question}</p>
             {
               e.answer.map(el =>
                 <label key={el.id}>
@@ -33,7 +33,7 @@ export default function StepTwo ({ data, onSubmit }) {
                     {...register(`${e.id}`)}
                     value={el.value}
                   />
-                  { el.answer}
+                  { el.title }
                 </label>
               )
             }

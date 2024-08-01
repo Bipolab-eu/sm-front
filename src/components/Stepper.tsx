@@ -28,8 +28,6 @@ export default function Stepper({ collegesData, fisrtQuizData, secondQuizData }:
     }
     
   }, [step, formValues])
-
-  console.log('Datos recopilados:', formValues)
   
   const steps = [
     <div key={1}>

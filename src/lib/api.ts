@@ -35,19 +35,19 @@ export async function findCollege (paramId: Number) {
 
 }
 
-export async function getQuiz (paramId:Number) {
+export async function getSurveys (paramId:Number) {
   try {
-    const response = await fetch(`${url}/quizzes/${paramId}?populate[question][populate][0]=answer`, {
+    const response = await fetch(`${url}/surveys/${paramId}?populate[form][populate][0]=answer`, {
       cache: 'no-store'
     })
 
     const { data: {
       attributes: {
-        question
+        form
       }
     } } = await response.json()
 
-    return question.map(({ id, title, answer }: any) => ({ id, title, answer }));
+    return form.map(({ id, question, answer }: any) => ({ id, question, answer }));
 
   } catch (error) {
     console.error('Error', error)
@@ -56,13 +56,33 @@ export async function getQuiz (paramId:Number) {
 }
 
 export async function postStudent (params:any) {
-  const { college, course, gender } = params[0]
-  const [ a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p ] = params[1]
-  const depresion = a + b + c + d
-  const suicidio = e + f + g
-  const ansiedad = h + i + j
-  const agresividad = k + l + m
-  const drogas = n + o + p
+  const { college, course, gender, age } = params[0]
+  
+  // Convierte los valores del objeto en array
+  const [ Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16 ]:any = Object.values(params[1])
+  const depresion = Q1 + Q2 + Q3 + Q4
+  const suicidio = Q5 + Q6 + Q7
+  const ansiedad = Q8 + Q9 + Q10
+  const agresividad = Q11 + Q12 + Q13
+  const drogas = Q14 + Q15 + Q16
+
+  // Convierte los valores del objeto en array
+  const [ Q17, Q18, Q19, Q20, Q21, Q22, Q23, Q24, Q25, Q26, Q27, Q28, Q29, Q30, Q31, Q32, Q33, Q34, Q35, Q36, Q37 ]:any = Object.values(params[2])
+  const dificultadesEmocionales = Q17 + Q18
+  const prosocial = Q19 + Q20
+  const autoestima = Q21 + Q22
+  const absentismo = Q23
+  const educacionSexual = Q24
+  const habitosPositivos = Q25 + Q26 + Q27
+  const bullying = Q28 + Q29
+  const pertenencia = Q30 + Q31
+  const educacionSMental = Q32 
+  const relacionPadres = Q33
+  const comunidad = Q34
+  const cooperacion = Q35
+  const integracion = Q36
+  const usoRS = Q37
+
 
   await fetch(`${url}/students`, {
       method: 'POST',
@@ -76,11 +96,26 @@ export async function postStudent (params:any) {
           },
           course,
           gender,
+          age,
           depresion,
           suicidio,
           ansiedad,
           agresividad,
-          drogas
+          drogas,
+          dificultadesEmocionales,
+          prosocial,
+          autoestima,
+          absentismo,
+          educacionSexual,
+          habitosPositivos,
+          bullying,
+          pertenencia,
+          educacionSMental,
+          relacionPadres,
+          comunidad,
+          cooperacion,
+          integracion,
+          usoRS
         }
       })
     })
