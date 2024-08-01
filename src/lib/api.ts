@@ -4,9 +4,7 @@ const url = process.env.API_URL
 
 export async function getColleges () {
   try {
-    const response = await fetch(`${url}/colleges?sort=name:asc`, {
-      cache: 'no-store'
-    })
+    const response = await fetch(`${url}/colleges?sort=name:asc`)
 
     const { data } = await response.json()
 
@@ -20,9 +18,7 @@ export async function getColleges () {
 
 export async function findCollege (paramId: Number) {
   try {
-    const response = await fetch(`${url}/colleges/${paramId}?populate[students][populate][0]=course`, {
-      cache: 'no-store'
-    })
+    const response = await fetch(`${url}/colleges/${paramId}?populate[students][populate][0]=course`)
 
     const { data: { attributes: { name, students} } } = await response.json()
 
@@ -37,9 +33,7 @@ export async function findCollege (paramId: Number) {
 
 export async function getSurveys (paramId:Number) {
   try {
-    const response = await fetch(`${url}/surveys/${paramId}?populate[form][populate][0]=answer`, {
-      cache: 'no-store'
-    })
+    const response = await fetch(`${url}/surveys/${paramId}?populate[form][populate][0]=answer`)
 
     const { data: {
       attributes: {
