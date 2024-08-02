@@ -30,15 +30,14 @@ export default function StepTwo ({ data, onSubmit }) {
               <p className="mb-1 text-sm">{e.question}</p>
               {
                 e.answer.map(el =>
-                  <label key={el.id} className="text-sm block">
-
+                  <label key={el.id} className="flex justify-between text-sm leading-none bg-slate-200 mb-2 p-4 rounded-lg">
+                    {el.title}
                     <input
                       type="radio"
                       {...register(`${e.id}`)}
                       value={el.value}
-                      className="mr-2"
+                      className="border-none bg-slate-200 w-3 h-3 checked:bg-slate-900"
                     />
-                    {el.title}
                   </label>
                 )
               }
