@@ -23,6 +23,7 @@ export default function Stepper({ collegesData, fisrtQuizData, secondQuizData }:
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0); // Reinicia la posición del scroll cuando avanza un step
     if (step === 3) {
       postStudent(formValues)
     }
