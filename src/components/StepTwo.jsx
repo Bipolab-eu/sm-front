@@ -27,16 +27,16 @@ export default function StepTwo ({ data, onSubmit }) {
         {
           data.map((e) =>
             <fieldset key={e.id} className="mb-2 bg-slate-100 p-4 border-solid border border-slate-300 rounded-lg">
-              <p className="mb-1 text-sm">{e.question}</p>
+              <p className="mb-2 text-sm">{e.question}</p>
               {
                 e.answer.map(el =>
-                  <label key={el.id} className="flex justify-between text-sm leading-none bg-slate-200 mb-2 p-4 rounded-lg">
+                  <label key={el.id} className="flex justify-between text-sm leading-none bg-slate-200 mb-2 p-4 rounded-lg border-none">
                     {el.title}
                     <input
                       type="radio"
                       {...register(`${e.id}`)}
                       value={el.value}
-                      className="border-none bg-slate-200 w-3 h-3 checked:bg-slate-900"
+                      className="border-none bg-slate-100 w-3 h-3 checked:bg-slate-900"
                     />
                   </label>
                 )
