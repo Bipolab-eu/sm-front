@@ -20,32 +20,36 @@ export default function StepTwo ({ data, onSubmit }) {
 
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {
-        data.map((e) =>
-          <fieldset key={e.id}>
-            <p>{e.question}</p>
-            {
-              e.answer.map(el =>
-                <label key={el.id}>
-                  <input 
-                    type="radio" 
-                    {...register(`${e.id}`)}
-                    value={el.value}
-                  />
-                  { el.title }
-                </label>
-              )
-            }
-            <span>{errors[e.id]?.message}</span>
-          </fieldset>
-        )
-      }
-      <button
-        type="submit"
-      >
-        Siguiente
-      </button>
-    </form>
+    <div
+      className="flex justify-center items-center px-4 pt-16"
+    >
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+        {
+          data.map((e) =>
+            <fieldset key={e.id} className="mb-2 bg-slate-100 p-4 border-solid border border-slate-300 rounded-lg">
+              <p className="mb-1 text-sm">{e.question}</p>
+              {
+                e.answer.map(el =>
+                  <label key={el.id} className="text-sm block">
+
+                    <input
+                      type="radio"
+                      {...register(`${e.id}`)}
+                      value={el.value}
+                      className="mr-2"
+                    />
+                    {el.title}
+                  </label>
+                )
+              }
+              <span className="text-red-500 text-xs">{errors[e.id]?.message}</span>
+            </fieldset>
+          )
+        }
+        
+        {/* Botón Submit */}
+        <button type="submit" className="bg-slate-900 text-slate-100 p-4 rounded-lg">Siguiente</button>
+      </form>
+    </div>
   )
 }
