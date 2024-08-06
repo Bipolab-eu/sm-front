@@ -11,32 +11,29 @@
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
+import SearchBar from "./SearchBar";
 
-export default function StepOne({ collegesData, onSubmit }) {
+export default function StepOne({ onSubmit }) {
 
   const StudentSchema = Yup.object().shape({
 
     college: Yup.string()
-      .oneOf(collegesData.map(college => college.id.toString()),'Campo obligatorio')
-      .required('Required'),
+      .required('Campo obligatorio'),
   
     course: Yup.string()
-      .oneOf(['ESO 1º', 'ESO 2º', 'ESO 3º', 'ESO 4º'], 'Campo obligatorio') 
-      .required('Required'),
+      .oneOf(['ESO 1º', 'ESO 2º', 'ESO 3º', 'ESO 4º'], 'Campo obligatorio'),
       
     gender: Yup.string()
-      .oneOf(['Masculino', 'Femenino', 'Otro'], 'Campo obligatorio') 
-      .required('Required'),
+      .oneOf(['Masculino', 'Femenino', 'Otro'], 'Campo obligatorio'),
 
     age: Yup.number()
       .integer('No se admiten números decimales')
       .min(9, 'Para realizar la encuesta, debes de tener entre 9 y 18 años')
       .max(18, 'Para realizar la encuesta, debes de tener entre 9 y 18 años')
-      .required('Introduce tu edad')
   
   });
 
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm({
+  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm({
     resolver: yupResolver(StudentSchema)
   })
 
@@ -47,28 +44,19 @@ export default function StepOne({ collegesData, onSubmit }) {
       <form onSubmit={handleSubmit(onSubmit)} className="w-full" >
 
         {/* Selecciona el Instituto */}
-        <fieldset className="mb-4">
-          <label htmlFor="text" className="block mb-2 leading-none text-slate-900"><span className="text-red-500 text-xs leading-none align-top">*</span>Selecciona tu centro</label>
-          
-          <select
-            {...register('college')}
-            defaultValue='default'
-            className="block w-full px-4 py-2 rounded-lg border-solid border border-slate-950 bg-slate-100"
-          >
-            <option value='default' disabled> – </option>
-            {
-              collegesData.map((e) =>
-                <option key={e.id} value={[e.id]}>{e.name}</option>
-              )
-            }
-          </select>
-
-          <span className="text-red-500 text-xs">{errors.college?.message}</span>
-        </fieldset>
+        <SearchBar
+          register={register}
+          setValue={setValue}
+          watch={watch}
+          errors={errors}
+        />
 
         {/* Selecciona el Curso */}
         <fieldset className="mb-4">
-          <label htmlFor="text" className="block mb-2 leading-none text-slate-900"><span className="text-red-500 text-xs leading-none align-top">*</span>¿En qué curso estás?</label>
+          <label htmlFor="text" className="block mb-2 leading-none text-slate-900">
+            <span className="text-red-500 text-xs leading-none align-top">*</span>
+            ¿En qué curso estás?
+          </label>
 
           <select
             {...register('course')}
@@ -88,7 +76,10 @@ export default function StepOne({ collegesData, onSubmit }) {
 
         {/* Selecciona el Género */}
         <fieldset className="mb-4">
-          <label htmlFor="text" className="block mb-2 leading-none text-slate-900"><span className="text-red-500 text-xs leading-none align-top">*</span>¿Con qué genero te identificas?</label>
+          <label htmlFor="text" className="block mb-2 leading-none text-slate-900">
+            <span className="text-red-500 text-xs leading-none align-top">*</span>
+            ¿Con qué genero te identificas?
+          </label>
 
           <select
             {...register('gender')}
@@ -106,7 +97,10 @@ export default function StepOne({ collegesData, onSubmit }) {
 
         {/* Introduce la edad */}
         <fieldset className="mb-4">
-          <label htmlFor="age" className="block mb-2 leading-none text-slate-900"><span className="text-red-500 text-xs leading-none align-top">*</span>¿Qué edad tienes?</label>
+          <label htmlFor="age" className="block mb-2 leading-none text-slate-900">
+            <span className="text-red-500 text-xs leading-none align-top">*</span>
+            ¿Qué edad tienes?
+          </label>
 
           <input
             id="age"

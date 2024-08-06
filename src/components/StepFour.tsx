@@ -6,9 +6,11 @@ interface Props {
 
 export default function StepFour({ surveyData }:Props) { 
   
-  const { college } = surveyData
+  const { collegeId } = surveyData
 
   return (
-    <h1>gracias por participar, puedes ver los datos de tu centro pulsando <Link href={`/map/${college}`}><strong>Aqui</strong></Link></h1>
+    <div className=" text-center flex justify-center items-center h-screen">
+      <h1>Gracias por participar, puedes ver los datos de tu centro pulsando <Link href={`/map/${collegeId}`}><strong>Aqui</strong></Link></h1>
+    </div>
   )
 }

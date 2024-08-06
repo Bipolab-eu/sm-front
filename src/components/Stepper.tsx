@@ -32,7 +32,7 @@ export default function Stepper({ collegesData, fisrtQuizData, secondQuizData }:
   
   const steps = [
     <div key={1}>
-      <StepOne collegesData={collegesData} onSubmit={getFormData} />
+      <StepOne onSubmit={getFormData} />
     </div>,
     <div key={2}>
       <StepTwo data={fisrtQuizData} onSubmit={getFormData}/>

@@ -1,5 +1,7 @@
 'use server'
 
+import { Concert_One } from "next/font/google"
+
 const url = process.env.API_URL
 
 export async function getColleges () {
@@ -14,6 +16,26 @@ export async function getColleges () {
     console.error('Error', error)
     throw error
   }
+}
+
+export async function findOneCollege (params:String) {
+  try {
+    const response = await fetch(`${url}/colleges?filters[name][$containsi]=${params}`)
+    const { data }  = await response.json()
+
+    if (params !== '') {
+      return data.map((item:any) => ({
+        id: item.id,
+        name: item.attributes.name
+      }))
+    }
+  
+    
+  } catch (error) {
+    console.error('Error', error)
+    throw error
+  }
+  
 }
 
 export async function findCollege (paramId: Number) {
@@ -50,7 +72,7 @@ export async function getSurveys (paramId:Number) {
 }
 
 export async function postStudent (params:any) {
-  const { college, course, gender, age } = params[0]
+  const { collegeId, course, gender, age } = params[0]
   
   // Convierte los valores del objeto en array
   const [ Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8, Q9, Q10, Q11, Q12, Q13, Q14, Q15, Q16 ]:any = Object.values(params[1])
@@ -86,7 +108,7 @@ export async function postStudent (params:any) {
       body: JSON.stringify({
         data: {
           college: {
-            id: college,
+            id: collegeId,
           },
           course,
           gender,
