@@ -20,7 +20,7 @@ export async function getColleges () {
 
 export async function findOneCollege (params:String) {
   try {
-    const response = await fetch(`${url}/colleges?filters[name][$containsi]=${params}`)
+    const response = await fetch(`${url}/colleges?filters[name][$containsi]=${params}&pagination[limit]=10`)
     const { data }  = await response.json()
 
     if (params !== '') {
