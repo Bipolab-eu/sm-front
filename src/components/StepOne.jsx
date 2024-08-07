@@ -8,10 +8,16 @@
   Age: Edad del alumno
 */
 
+import { Suspense } from "react"
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as Yup from 'yup'
 import SearchBar from "./SearchBar";
+
+/* Función específica para el componente Suspense */
+function Loading() {
+  return <h2>🌀 Loading...</h2>;
+}
 
 export default function StepOne({ onSubmit }) {
 
@@ -44,12 +50,14 @@ export default function StepOne({ onSubmit }) {
       <form onSubmit={handleSubmit(onSubmit)} className="w-full" >
 
         {/* Selecciona el Instituto */}
-        <SearchBar
-          register={register}
-          setValue={setValue}
-          watch={watch}
-          errors={errors}
-        />
+        <Suspense fallback={<Loading />}>
+          <SearchBar
+            register={register}
+            setValue={setValue}
+            watch={watch}
+            errors={errors}
+          />
+        </Suspense>
 
         {/* Selecciona el Curso */}
         <fieldset className="mb-4">
@@ -119,3 +127,5 @@ export default function StepOne({ onSubmit }) {
     </div>
   )
 }
+
+

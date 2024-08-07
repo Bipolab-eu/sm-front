@@ -7,13 +7,12 @@ import StepFour from "./StepFour"
 import { postStudent } from "@/lib/api"
 
 interface Props {
-  collegesData: Array<Object>
   fisrtQuizData: Array<Object>
   secondQuizData: Array<Object>
 }
 
 
-export default function Stepper({ collegesData, fisrtQuizData, secondQuizData }:Props) {
+export default function Stepper({ fisrtQuizData, secondQuizData }:Props) {
   const [step, setStep] = useState(0)
   const [formValues, setFormValues] = useState(Array)
 
