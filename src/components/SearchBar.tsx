@@ -48,9 +48,8 @@ export default function SearchBar({ register, setValue, watch, errors }:Props) {
   };
 
 
-  const handleSuggestionClick = (name: string, id: string) => {
+  const handleSuggestionClick = (name: string, id: number) => {
     setValue('collegeId', id);
-    console.log('valor del instituto:', id)
     setValue('college', name);
   };
 
@@ -59,10 +58,10 @@ export default function SearchBar({ register, setValue, watch, errors }:Props) {
       <fieldset className="mb-4">
         <label htmlFor="college" className="block mb-2 leading-none text-slate-900">
           <span className="text-red-500 text-xs leading-none align-top">*</span>
-          Busca el nombre de tu instituto
+          Busca el nombre de tu instituto y selecciónalo.
         </label>
 
-        <div onBlur={handleBlur}>
+        <div onBlur={handleBlur} className="relative">
           <input
             id="college"
             name="college"
@@ -71,10 +70,16 @@ export default function SearchBar({ register, setValue, watch, errors }:Props) {
             onFocus={handleFocus}
             {...register('college')}
           />
-          {errors.collegeId && <span className="text-red-500 text-xs">{errors.collegeId.message}</span>}
+          <input
+            type="reset"
+            value="&times;"
+            className="text-2xl font-light leading-none absolute inset-y-0 right-0 px-3 text-slate-500"
+            onClick={() => handleSuggestionClick('', NaN)}
+          />
         </div>
-        <Suspense fallback={<Loading />}>
-          <div className={`${ hideSuggestions === true ? 'hidden' : 'block' }`}>
+        {errors.collegeId && <span className="text-red-500 text-xs">{errors.collegeId.message}</span>}
+        <div className={`${hideSuggestions === true ? 'hidden' : 'block'}`}>
+          <Suspense fallback={<Loading />}>
             {suggestions.map((e: any) => (
               <div
                 className="px-4 py-2 mt-2 rounded-lg bg-slate-100 active:bg-slate-950 active:text-slate-100"
@@ -84,8 +89,8 @@ export default function SearchBar({ register, setValue, watch, errors }:Props) {
                 {e.name}
               </div>
             ))}
-          </div>
-        </Suspense>
+          </Suspense>
+        </div>
       </fieldset>
     )
 }

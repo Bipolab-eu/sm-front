@@ -22,9 +22,9 @@ function Loading() {
 export default function StepOne({ onSubmit }) {
 
   const StudentSchema = Yup.object().shape({
-        
+
     collegeId: Yup.number()
-      .required('El nombre de este centro no existe o no está registrado en nuestra base de datos.'),
+      .required('Campo Obligatorio'),
   
     course: Yup.string()
       .oneOf(['ESO 1º', 'ESO 2º', 'ESO 3º', 'ESO 4º'], 'Campo obligatorio'),
