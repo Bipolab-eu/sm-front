@@ -1,5 +1,14 @@
 import { findCollege } from "@/lib/api"
-import { useCalculateMedia } from "@/hooks/useCalculateMedia"
+
+export const calculateMedia = (key:string, indicador: Array<number>) => {
+  const sumaTotal = indicador.reduce((acc:any, num:any) => acc + num, 0);
+  const cantidadElementos = indicador.length;
+
+  const valorMedio = sumaTotal / cantidadElementos;
+  const finalResult = parseFloat(valorMedio.toFixed(2));
+
+  return { [key]: finalResult };
+}
 
 export default async function CollegeId ({ params: { id }}:any) {
   const { name, students } = await findCollege(id)
@@ -14,11 +23,11 @@ export default async function CollegeId ({ params: { id }}:any) {
     const drogas = course.map((item:any) => item.attributes.drogas)
     
     return [
-      useCalculateMedia('depresion', depresion),
-      useCalculateMedia('suicidio', suicidio),
-      useCalculateMedia('ansiedad', ansiedad),
-      useCalculateMedia('agresividad', agresividad),
-      useCalculateMedia('drogas', drogas)
+      calculateMedia('depresion', depresion),
+      calculateMedia('suicidio', suicidio),
+      calculateMedia('ansiedad', ansiedad),
+      calculateMedia('agresividad', agresividad),
+      calculateMedia('drogas', drogas)
     ]
   }
 
