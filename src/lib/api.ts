@@ -29,7 +29,6 @@ export async function findOneCollege (params:String) {
         name: item.attributes.name
       }))
     }
-  
     
   } catch (error) {
     console.error('Error', error)
