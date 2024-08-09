@@ -1,6 +1,6 @@
 import { findCollege } from "@/lib/api"
 
-export const calculateMedia = (key:string, indicador: Array<number>) => {
+const calculateMedia = (key:string, indicador: Array<number>) => {
   const sumaTotal = indicador.reduce((acc:any, num:any) => acc + num, 0);
   const cantidadElementos = indicador.length;
 
