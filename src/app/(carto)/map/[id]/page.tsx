@@ -17,48 +17,33 @@ export default async function CollegeId ({ params: { id }}:any) {
   
   const courseFilter = (courseValue:String) => {
     const course = students.data.filter((item:any) => item.attributes.course === courseValue)
-    
-    const depresion = course.map((item:any) => item.attributes.depresion)
-    const suicidio = course.map((item:any) => item.attributes.suicidio)
-    const ansiedad = course.map((item:any) => item.attributes.ansiedad)
-    const agresividad = course.map((item:any) => item.attributes.agresividad)
-    const drogas = course.map((item:any) => item.attributes.drogas)
-    const dificultadesEmocionales = course.map((item:any) => item.attributes.dificultadesEmocionales)
-    const prosocial = course.map((item:any) => item.attributes.prosocial)
-    const autoestima = course.map((item:any) => item.attributes.autoestima)
-    const absentismo = course.map((item:any) => item.attributes.absentismo)
-    const educacionSexual = course.map((item:any) => item.attributes.educacionSexual)
-    const habitosPositivos = course.map((item:any) => item.attributes.habitosPositivos)
-    const bullying = course.map((item:any) => item.attributes.bullying)
-    const pertenencia = course.map((item:any) => item.attributes.pertenencia)
-    const educacionSMental = course.map((item:any) => item.attributes.educacionSMental)
-    const relacionPadres = course.map((item:any) => item.attributes.relacionPadres)
-    const comunidad = course.map((item:any) => item.attributes.comunidad)
-    const cooperacion = course.map((item:any) => item.attributes.cooperacion)
-    const integracion = course.map((item:any) => item.attributes.integracion)
-    const usoRS = course.map((item:any) => item.attributes.usoRS)
 
-    return [
-      calculateMedia('depresion', depresion),
-      calculateMedia('suicidio', suicidio),
-      calculateMedia('ansiedad', ansiedad),
-      calculateMedia('agresividad', agresividad),
-      calculateMedia('drogas', drogas),
-      calculateMedia('dificultadesEmocionales', dificultadesEmocionales),
-      calculateMedia('prosocial', prosocial),
-      calculateMedia('autoestima', autoestima),
-      calculateMedia('absentismo', absentismo),
-      calculateMedia('educacionSexual', educacionSexual),
-      calculateMedia('habitosPositivos', habitosPositivos),
-      calculateMedia('bullying', bullying),
-      calculateMedia('pertenencia', pertenencia),
-      calculateMedia('educacionSMental', educacionSMental),
-      calculateMedia('relacionPadres', relacionPadres),
-      calculateMedia('comunidad', comunidad),
-      calculateMedia('cooperacion', cooperacion),
-      calculateMedia('integracion', integracion),
-      calculateMedia('usoRS', usoRS)
+    const indicadores = [
+      "depresion",
+      "suicidio",
+      "ansiedad",
+      "agresividad",
+      "drogas",
+      "dificultadesEmocionales",
+      "prosocial",
+      "autoestima",
+      "absentismo",
+      "educacionSexual",
+      "habitosPositivos",
+      "bullying",
+      "pertenencia",
+      "educacionSMental",
+      "relacionPadres",
+      "comunidad",
+      "cooperacion",
+      "integracion",
+      "usoRS",
     ]
+
+    return indicadores.map((indicador) => {
+      const valores = course.map((item: any) => item.attributes[indicador]);
+      return calculateMedia(indicador, valores);
+    })
   }
 
   return (
