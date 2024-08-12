@@ -37,7 +37,7 @@ export async function findOneCollege (params:String) {
   
 }
 
-export async function findCollege (paramId: Number) {
+export async function getCollegeById (paramId: Number) {
   try {
     const response = await fetch(`${url}/colleges/${paramId}?populate[students][populate][0]=course`)
 
